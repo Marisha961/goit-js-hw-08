@@ -8,13 +8,15 @@ const refs = {
 
 const KEY_FORM = 'feedback-form-state';
 
-const formData = {};
+const selectedInput = {};
 
 const onInputChange = (e) => {
 
-    formData[e.target.name] = e.target.value;
-    console.log(e.target.value);
-    localStorage.setItem(KEY_FORM, JSON.stringify(formData));
+    selectedInput[e.target.name] = e.target.value;
+
+    // console.log(e.target.value);
+    localStorage.setItem(KEY_FORM, JSON.stringify(selectedInput));
+    console.log(selectedInput);
 };
 
 
@@ -22,10 +24,10 @@ refs.form.addEventListener('input', throttle(onInputChange, 500));
 
 const onFormSubmit = (e) => {
     e.preventDefault();
-
-    formData.email = refs.email.value;
-    formData.message = refs.textarea.value;
+    const formData = new FormData(refs.form);
+    formData.forEach((value, name) => console.log(value, name));
     console.log(formData);
+    console.log(e.currentTarget);
     e.currentTarget.reset();
     localStorage.removeItem(KEY_FORM);
 };
@@ -35,11 +37,13 @@ refs.form.addEventListener('submit', onFormSubmit);
 
 const pageLoading = () => {
     const receivedОbject = JSON.parse(localStorage.getItem(KEY_FORM));
-
+    console.log(receivedОbject);
     if (receivedОbject) {
-        refs.email.value = receivedОbject.email;
-        refs.textarea.value = receivedОbject.message;
+        refs.email.value = receivedОbject.email || '';
+        console.log(refs.email.value);
+        refs.textarea.value = receivedОbject.message || '';
+        console.log(refs.textarea.value);
     }
+
 };
 pageLoading();
-
