@@ -14,9 +14,8 @@ const onInputChange = (e) => {
 
     selectedInput[e.target.name] = e.target.value;
 
-    // console.log(e.target.value);
     localStorage.setItem(KEY_FORM, JSON.stringify(selectedInput));
-    console.log(selectedInput);
+    // console.log(selectedInput);
 };
 
 
