@@ -8,12 +8,7 @@ const refs = {
 
 const KEY_FORM = 'feedback-form-state';
 
-
-
 const onInputChange = (e) => {
-    // Получаешь значение из хранилища.
-    // Если значение - null, то присваиваешь selectedInput пустой объект.
-
     let selectedInput = JSON.parse(localStorage.getItem(KEY_FORM));
     if (!selectedInput) {
         selectedInput = {};
@@ -48,4 +43,5 @@ const pageLoading = () => {
         refs.textarea.value = receivedОbject.message || '';
     }
 };
+
 pageLoading();
