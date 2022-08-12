@@ -11,7 +11,14 @@ const KEY_FORM = 'feedback-form-state';
 
 
 const onInputChange = (e) => {
-    let selectedInput = {};
+    // Получаешь значение из хранилища.
+    // Если значение - null, то присваиваешь selectedInput пустой объект.
+
+    let selectedInput = JSON.parse(localStorage.getItem(KEY_FORM));
+    if (!selectedInput) {
+        selectedInput = {};
+    }
+
     selectedInput[e.target.name] = e.target.value;
 
     localStorage.setItem(KEY_FORM, JSON.stringify(selectedInput));
@@ -23,7 +30,7 @@ refs.form.addEventListener('input', throttle(onInputChange, 500));
 
 const onFormSubmit = (e) => {
     e.preventDefault();
-    formData = new FormData(refs.form);
+    const formData = new FormData(refs.form);
     formData.forEach((value, name) => console.log(value, name));
 
     e.currentTarget.reset();
@@ -34,12 +41,11 @@ refs.form.addEventListener('submit', onFormSubmit);
 
 
 const pageLoading = () => {
-    receivedОbject = JSON.parse(localStorage.getItem(KEY_FORM));
+    const receivedОbject = JSON.parse(localStorage.getItem(KEY_FORM));
 
     if (receivedОbject) {
         refs.email.value = receivedОbject.email || '';
         refs.textarea.value = receivedОbject.message || '';
     }
-
 };
 pageLoading();
